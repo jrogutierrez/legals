@@ -1,0 +1,52 @@
+DOCS/ARQUITECTURA-SEGURIDAD.MD
+Seguridad y autenticación en RaspadorTelegram
+
+
+
+1. Principios de seguridad
+
+- Principio de menor privilegio: Cada componente solo tiene los permisos estrictamente necesarios.
+- Defensa en profundidad: Se combinan controles de red, aplicación y datos.
+- Confidencialidad: Tokens y credenciales nunca se guardan en código fuente.
+
+
+2. Gestión de credenciales
+
+- Variables de entorno en archivo .env (no versionado).
+- TELEGRAM_API_ID, TELEGRAM_API_HASH, TELEGRAM_BOT_TOKEN.
+- Acceso al contenedor Docker limitado a usuarios del grupo docker.
+
+
+3. Autenticación con Telegram
+
+- Modo Bot: Uso de TELEGRAM_BOT_TOKEN.
+- Modo Usuario: TELEGRAM_API_ID + TELEGRAM_API_HASH + número de teléfono (solo en entornos controlados).
+
+
+4. Cifrado y almacenamiento seguro
+
+- Base de datos: conexión TLS (postgresql://... con sslmode=require).
+- Archivos multimedia: cifrado opcional con openssl al guardarse en uploads/.
+
+
+5. Protección contra abuso de API
+
+- Implementar rate limit interno con token bucket.
+- Back off exponencial ante respuestas 429.
+- Registro de intentos fallidos en logs de auditoría.
+
+
+6. Monitoreo y auditoría
+
+- Logs estructurados con nivel INFO, WARN, ERROR.
+- Integración opcional con Prometheus para métricas de llamadas a la API.
+- Retención de logs: 30 días, rotación diaria.
+
+
+7. Respuesta a incidentes
+
+| Evento | Acción inmediata | Responsable | Tiempo de respuesta |
+|--------|------------------|-------------|---------------------|
+| Exposición de token | Revocar token, generar nuevo, rotar .env | DevOps | < 1 h |
+| Inyección de datos | Desactivar worker, revisar validaciones | Seguridad | < 2 h |
+| Acceso no autorizado a DB | Bloquear IP, revisar auditoría | DBA | < 30 min |

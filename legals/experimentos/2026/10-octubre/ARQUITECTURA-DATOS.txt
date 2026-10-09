@@ -1,0 +1,75 @@
+📊 DOCS/ARQUITECTURA-DATOS.MD
+Arquitectura de datos para RaspadorTelegram
+
+
+
+1. Visión general
+
+Se modela la información extraída de Telegram en un esquema relacional que permite consultas eficientes y preserva la trazabilidad de cada mensaje.
+
+
+2. Diagrama entidad relación (texto)
+
+- Channel (id, title, type, username, created_at)
+- Message (id, channel_id, author_id, date, text, media_path, reply_to_message_id)
+- User (id, username, first_name, last_name, is_bot, language_code)
+- Media (id, message_id, type, file_id, file_path, size_bytes)
+
+Relaciones:
+Channel 1 ── * Message
+User 1 ── * Message (author)
+Message 1 ── * Media
+
+
+3. Tablas y campos
+
+| Tabla | Campo | Tipo | Descripción |
+|-------|-------|------|-------------|
+| channel | id | BIGINT PK | ID interno del canal |
+| channel | title | TEXT | Nombre visible |
+| channel | type | TEXT | channel, group, supergroup |
+| channel | username | TEXT | @username (opcional) |
+| channel | created_at | TIMESTAMP | Fecha de registro |
+| user | id | BIGINT PK | ID de usuario de Telegram |
+| user | username | TEXT | @username |
+| user | first_name | TEXT | Nombre |
+| user | last_name | TEXT | Apellido |
+| user | is_bot | BOOLEAN | Si es bot |
+| user | language_code | TEXT | Código de idioma |
+| message | id | BIGINT PK | ID del mensaje |
+| message | channel_id | BIGINT FK | Canal al que pertenece |
+| message | author_id | BIGINT FK | Usuario autor |
+| message | date | TIMESTAMP | Fecha/hora del mensaje |
+| message | text | TEXT | Contenido textual |
+| message | media_path | TEXT | Ruta al archivo descargado |
+| message | reply_to_message_id | BIGINT | Mensaje al que responde |
+| media | id | BIGINT PK | ID del archivo |
+| media | message_id | BIGINT FK | Mensaje asociado |
+| media | type | TEXT | photo, video, document, etc. |
+| media | file_id | TEXT | ID de Telegram |
+| media | file_path | TEXT | Ruta en disco |
+| media | size_bytes | BIGINT | Tamaño del archivo |
+
+
+4. Índices recomendados
+
+- idx_message_channel_date (channel_id, date) para búsquedas cronológicas.
+- idx_media_type (type) para filtrar por tipo de archivo.
+
+
+5. Persistencia de archivos multimedia
+
+Los archivos se guardan bajo uploads/ con estructura uploads///.
+
+
+6. Estrategia de backup
+
+- Dump diario de PostgreSQL (pg_dump).
+- Copia de seguridad de uploads/ a bucket S3 o almacenamiento local redundante.
+
+
+7. Anexos
+
+- Script de creación de tablas (ver src/init_db.sql).
+- Política de retención (30 días por defecto, configurable).
+

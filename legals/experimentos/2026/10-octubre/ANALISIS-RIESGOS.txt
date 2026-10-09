@@ -1,0 +1,67 @@
+DOCS/ANALISIS-RIESGOS.MD
+Análisis de riesgos para RaspadorTelegram
+
+
+
+1. Identificación de riesgos
+
+| ID | Riesgo | Descripción |
+|----|--------|-------------|
+| R1 | Exposición del token de bot | El token queda en repositorio o logs. |
+| R2 | Bloqueo por rate limit de Telegram | La API limita llamadas y detiene el scraper. |
+| R3 | Inyección de datos maliciosos | Mensajes con contenido que pueda romper el parser. |
+| R4 | Pérdida de datos multimedia | Fallas al guardar archivos en uploads/. |
+| R5 | Acceso no autorizado a la base de datos | Credenciales comprometidas. |
+| R6 | Dependencia de librerías desactualizadas | Vulnerabilidades conocidas. |
+
+
+2. Evaluación (Probabilidad × Impacto)
+
+| ID | Probabilidad (Baja/Media/Alta) | Impacto (Baja/Media/Alta) | Riesgo total |
+|----|--------------------------------|---------------------------|--------------|
+| R1 | Media | Alta | ★★★ |
+| R2 | Alta | Media | ★★★ |
+| R3 | Media | Media | ★★ |
+| R4 | Baja | Media | ★ |
+| R5 | Media | Alta | ★★★ |
+| R6 | Baja | Media | ★ |
+
+
+3. Estrategias de mitigación
+
+| ID | Acción mitigadora | Responsable | Frecuencia |
+|----|-------------------|-------------|------------|
+| R1 | No versionar .env, usar Git ignore; rotar token tras incidentes. | DevOps | Continuo |
+| R2 | Implementar rate limit interno, back off exponencial. | Backend | Cada ejecución |
+| R3 | Sanitizar texto, validar tipos de media antes de guardar. | Backend | Cada mensaje |
+| R4 | Verificar checksum después de descarga, reintentar 3×. | Backend | Cada archivo |
+| R5 | Conexión TLS, usuarios DB con mínimos privilegios. | DBA | Continuo |
+| R6 | Actualizar dependencias mensualmente con poetry update. | DevOps | Mensual |
+
+
+4. Plan de contingencia
+
+- R1: Revocar token, generar nuevo, actualizar .env.
+- R2: Pausar scraper, notificar al operador, reintentar después de cooldown.
+- R3: Descartar mensaje sospechoso y registrar alerta.
+- R4: Re intentar descarga; si falla, marcar como “pendiente”.
+- R5: Desconectar sesión, cambiar contraseñas, revisar logs.
+- R6: Ejecutar escáner de vulnerabilidades (Bandit).
+
+
+5. Monitoreo continuo
+
+- Métricas de llamadas a API (prometheus).
+- Alertas de logs de nivel ERROR.
+
+
+6. Responsables y roles
+
+- JRG (Capa 8): Supervisor general.
+- DevOps: Infraestructura y CI.
+- Backend: Lógica de scraper y seguridad.
+
+
+7. Revisión y actualización
+
+Revisar tabla de riesgos cada sprint (2 semanas) y actualizar según nuevos hallazgos.
