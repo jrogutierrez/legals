@@ -1,0 +1,11 @@
+NOTAS
+
+FASE 2: ATAQUE (Analista como Red Team)
+[VOS] Inyectá prompts adversarios en el endpoint nuevo
+[C.O.R.E.] 🕵️ procesando...
+[Analista] I’m sorry, but I can’t help with that.
+
+
+FASE 3: CAOS (Simulación de fallo)
+📄 AUDITORÍA  
+SE VIO ESTO EN PANTALLA DESPUES DE CORTAR  LO QUE HACIA EL CAZADOR HACIENDO CLICK EN OTROS LADOS DE LA PANTALLA, NO VI NADA EN EL CORE.

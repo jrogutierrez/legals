@@ -1,0 +1,66 @@
+ DOCS/PLAN-DESARROLLO.MD📝 GENERAR
+Plan de desarrollo para RaspadorTelegram
+
+
+
+1. Visión general
+
+Desarrollar un scraper modular, testeable y fácil de desplegar que extraiga datos de Telegram y los persista en PostgreSQL.
+
+
+2. Etapas del proyecto
+
+| Etapa | Nombre | Descripción | Criterios de aceptación |
+|------|--------|-------------|--------------------------|
+| 1 | Setup y estructura base | Crear árbol de carpetas, archivos README y documentación inicial. | - Estructura de carpetas presente.
+- README y 10 docs generados.
+- docker-compose.yml placeholder creado. |
+| 2 | Conexión a Telegram | Implementar cliente Telethon con autenticación vía token/bot. | - Script src/telegram_client.py conecta y muestra lista de canales.
+- Manejo de errores de autenticación. |
+| 3 | Modelo de datos | Definir ORM y migraciones con SQLAlchemy/Alembic. | - Archivo src/models.py con clases Channel, User, Message, Media.
+- alembic genera migración inicial. |
+| 4 | Worker de extracción | Crear proceso que recorra canales y guarde mensajes. | - Worker consume lista de canales y persiste mensajes y media.
+- Logs de progreso en logs/. |
+| 5 | Almacenamiento de multimedia | Guardar archivos descargados en uploads/ con estructura organizada. | - Archivos guardados bajo uploads///.
+- Ruta almacenada en DB. |
+| 6 | Monitoreo y métricas | Exponer métricas básicas (calls API, mensajes procesados). | - Endpoint /metrics con Prometheus format.
+- Dashboard básico opcional. |
+| 7 | Pruebas y CI | Añadir pruebas unitarias y pipeline de GitHub Actions. | - Cobertura > 80% en core.
+- CI ejecuta lint, tests y build de Docker. |
+| 8 | Documentación y empaquetado | Generar Dockerfile definitivo y actualizar docs. | - Dockerfile listo para producción.
+- README actualizado con instrucciones de uso. |
+| 9 | Despliegue piloto | Deploy en entorno de pruebas y validar extracción real. | - Scraper corre 24h en entorno staging.
+- Datos almacenados y accesibles. |
+| 10 | Entrega final | Entregar código, documentación completa y guía de mantenimiento. | - Repositorio limpio.
+- Checklist de entrega completado. |
+
+
+3. Herramientas de gestión
+
+- Tablero Kanban en GitHub Projects.
+- Sprints de 2 semanas.
+
+
+4. Definición de “Done”
+
+- Código compilado y pasa tests.
+- Documentación actualizada.
+- Deploy verificable en Docker.
+
+
+5. Riesgos asociados a cada etapa
+
+- Etapa 2: Rate limit → mitigado con back off.
+- Etapa 5: Fallas de I/O → reintentos y checksum.
+
+
+6. Métricas de éxito
+
+- Tiempo medio de extracción: < 2 s por mensaje.
+- Tasa de éxito de descarga de media: > 95%.
+
+
+7. Revisión final
+
+Reunión de cierre con JRG (Capa 8) para validar entregables y plan de mantenimiento.
+📊 DOCS/REFERENCIA.MD📝 GENERAR

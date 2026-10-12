@@ -1,0 +1,50 @@
+DOCS/REFERENCIA.MD📝 GENERAR
+Referencia del proyecto RaspadorTelegram
+
+
+
+1. Objetivo del proyecto
+
+Crear una herramienta automatizada que permita extraer y almacenar datos de canales y grupos de Telegram para su posterior análisis.
+
+
+2. Stack tecnológico elegido
+
+- Lenguaje: Python 3.11
+- Cliente Telegram: Telethon
+- Base de datos: PostgreSQL 15
+- ORM: SQLAlchemy
+- Logging: Loguru
+- Entorno: Docker + Docker Compose
+
+
+3. Estado actual
+
+Arquitectura inicial generada (documentación completa). Código fuente pendiente de implementación por el Obrero.
+
+
+4. Principios de diseño
+
+- Modularidad: Cada componente (ingreso, procesamiento, persistencia) está aislado.
+- Configurabilidad: Parámetros en .env.
+- Observabilidad: Logs estructurados y métricas básicas.
+
+
+5. Dependencias externas
+
+- telethon (cliente oficial).
+- psycopg2-binary (driver PostgreSQL).
+- python-dotenv (carga de variables de entorno).
+
+
+6. Compatibilidad
+
+- Sistemas operativos: Linux, Windows (WSL).
+- Arquitectura: x86_64, ARM64 (Docker).
+
+
+7. Próximos pasos
+
+- Implementar la capa de ingreso (src/ingreso.py).
+- Definir esquema de base de datos (src/models.py).
+- Configurar Docker Compose.

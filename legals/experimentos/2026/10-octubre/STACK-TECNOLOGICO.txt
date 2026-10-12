@@ -1,0 +1,63 @@
+DOCS/STACK-TECNOLOGICO.MD
+Stack tecnológico para RaspadorTelegram
+
+
+
+1. Lenguaje de programación
+
+- Python 3.11 – Madurez, gran ecosistema de librerías para Telegram y bases de datos, fácil de mantener.
+
+
+2. Cliente Telegram
+
+- Telethon – Cliente oficial basado en MTProto, permite acceso a canales y grupos sin limitaciones de bot cuando se usa con credenciales de usuario.
+
+
+3. Base de datos
+
+- PostgreSQL 15 – Relacional, robusto, soporte de JSONB para campos flexibles, fácil backup.
+
+
+4. ORM / Acceso a datos
+
+- SQLAlchemy 2.x – Mapeo de objetos a tablas, migraciones con Alembic.
+
+
+5. Logging
+
+- Loguru – Logging sencillo, rotación automática, formato estructurado.
+
+
+6. Contenedorización
+
+- Docker + Docker Compose – Entorno reproducible, aislamiento de dependencias.
+
+
+7. Justificación de cada elección
+
+| Capa | Herramienta | Por qué se eligió |
+|------|-------------|-------------------|
+| Lenguaje | Python 3.11 | Legibilidad, gran comunidad, async nativo. |
+| Cliente | Telethon | Acceso completo a MTProto, soporta usuarios y bots. |
+| DB | PostgreSQL | ACID, extensible, buen rendimiento en lecturas masivas. |
+| ORM | SQLAlchemy | Abstracción clara, migraciones con Alembic. |
+| Logging | Loguru | Configuración mínima, salida legible. |
+| Contenedores | Docker | Portabilidad, despliegue sencillo. |
+| Orquestación | Docker Compose | Gestión de varios servicios (app + db). |
+
+
+8. Herramientas de desarrollo
+
+- Poetry para gestión de dependencias.
+- pytest para pruebas unitarias.
+- black + isort para formateo.
+
+
+9. CI/CD (futuro)
+
+- GitHub Actions → lint → test → build → push a Docker Hub.
+
+
+10. Licencia
+
+Código bajo MIT (compatible con uso comercial y académico).

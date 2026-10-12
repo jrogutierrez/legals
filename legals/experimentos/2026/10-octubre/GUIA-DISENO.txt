@@ -1,0 +1,73 @@
+ DOCS/GUIA-DISENO.MD
+Guía de diseño UI/UX y SEO para RaspadorTelegram
+
+
+
+1. Paleta de colores (HEX)
+
+- Primario: #2A9D8F (verde azulado)
+- Secundario: #E9C46A (amarillo suave)
+- Fondo: #F4F4F4 (gris muy claro)
+- Texto principal: #264653 (gris oscuro)
+- Éxitos / alertas: #2F855A (verde)
+- Errores: #E63946 (rojo)
+
+
+2. Tipografía con fallback local
+
+- Principal: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+- Secundaria: "Roboto Mono", "Courier New", monospace;
+
+
+3. Breakpoints responsive
+
+| Tamaño | Min width | Max width |
+|--------|-----------|-----------|
+| Mobile | 0px | 599px |
+| Tablet | 600px | 959px |
+| Desktop| 960px | 1919px |
+| Large | 1920px | ∞ |
+
+
+4. Componentes UI básicos
+
+- Header: barra superior con logo y botón de “Iniciar Scrape”.
+- Form: selector de canal/grupo, campo de token, botón “Ejecutar”.
+- Table: vista de resultados (ID, autor, fecha, texto).
+- Alert: mensajes de éxito/error con colores definidos.
+
+
+5. SEO on page (aunque es una herramienta interna)
+
+- Title: RaspadorTelegram – Extracción de datos de Telegram.
+- Meta description: Herramienta open source para extraer mensajes y multimedia de canales y grupos de Telegram, con almacenamiento en PostgreSQL.
+- Canonical: /.
+- Robots: noindex, nofollow (no queremos que los motores indexen).
+
+
+6. Schema.org
+
+Utilizar SoftwareApplication:
+`json
+{
+"@context": "https://schema.org",
+"@type": "SoftwareApplication",
+"name": "RaspadorTelegram",
+"operatingSystem": "Linux, Windows",
+"applicationCategory": "Utility",
+"offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+}
+}
+`
+
+
+7. Accesibilidad WCAG 2.1 AA
+
+- Contraste mínimo 4.5:1 (ver paleta).
+- Todos los controles con aria-label.
+- Navegación por teclado completa.
+- Texto alternativo en imágenes y videos descargados.
+- Mensajes de error claros y descriptivos.

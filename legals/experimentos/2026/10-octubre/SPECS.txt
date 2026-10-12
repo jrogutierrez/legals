@@ -1,0 +1,53 @@
+DOCS/SPECS.MD
+Especificaciones del proyecto RaspadorTelegram
+
+
+
+1. Introducción
+
+Definir un scraper que pueda conectarse a la API de Telegram (usando bots o clientes no oficiales) y extraer mensajes, fotos, videos y metadatos de canales y grupos especificados.
+
+
+2. Alcance
+
+- Incluye: Conexión a Telegram, extracción de contenido, almacenamiento en base de datos PostgreSQL, logs de actividad.
+- Excluye: Interfaz de usuario avanzada, envío de mensajes, integración con otras plataformas.
+
+
+3. Requisitos funcionales
+
+1. Autenticación mediante token de bot o credenciales de usuario.
+2. Selección de canales/grupos por ID o nombre.
+3. Descarga de mensajes (texto, multimedia) y metadatos (fecha, autor, likes).
+4. Persistencia de datos en tablas estructuradas.
+5. Registro de errores y eventos en archivo de logs.
+
+
+4. Requisitos no funcionales
+
+- Rendimiento: Capacidad de procesar al menos 500 mensajes por minuto.
+- Escalabilidad: Arquitectura preparada para múltiples workers.
+- Seguridad: Manejo seguro de tokens y credenciales, cifrado en reposo.
+- Portabilidad: Ejecutable en Linux y Windows.
+
+
+5. Arquitectura propuesta
+
+- Capa de ingreso: Cliente Telegram (TDLib o Telethon).
+- Capa de procesamiento: Workers en Node.js (o Python) que transforman los datos.
+- Capa de persistencia: PostgreSQL + esquema de tablas.
+- Capa de monitoreo: Winston (logs) + Prometheus (métricas).
+
+
+6. Consideraciones de implementación
+
+- Uso de librerías oficiales o bien mantenidas (Telethon, python telegram bot).
+- Manejo de límites de la API (rate limit) mediante back off exponencial.
+- Configuración mediante archivo .env.
+
+
+7. Anexos
+
+- Diagrama de flujo (ver docs/arquitectura-datos.md).
+- Tabla de mapeo de campos (ver docs/arquitectura-datos.md).
+- Lista de dependencias sugeridas (ver docs/stack-tecnologico.md).
